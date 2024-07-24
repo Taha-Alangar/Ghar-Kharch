@@ -44,6 +44,8 @@ dependencies {
 
     //Room Database
     implementation ("androidx.room:room-runtime:2.6.1")
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     annotationProcessor ("androidx.room:room-compiler:2.6.1")
     ksp ("androidx.room:room-compiler:2.6.1")
     testImplementation ("androidx.room:room-testing:2.6.1")

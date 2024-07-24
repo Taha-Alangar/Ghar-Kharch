@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.GharKharch" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+         <item name="colorPrimary">@color/light_green</item>
     </style>
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color"  >@color/transparent_gray </item>

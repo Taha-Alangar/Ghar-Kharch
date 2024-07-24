@@ -15,5 +15,8 @@
     <color name="transparent_gray">#FAFAFA</color>
     <color name="error_color">#EC2D1F</color>
 
+    <color name="navi">#1199AA</color>
+    <color name="red">#E53935</color>
+    <color name="yellow">#FFB300</color>
 
 </resources>

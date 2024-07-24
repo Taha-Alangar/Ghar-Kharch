@@ -51,6 +51,9 @@ dependencies {
     testImplementation ("androidx.room:room-testing:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
 
+    //calculator
+    implementation ("net.objecthunter:exp4j:0.4.8")
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

@@ -6,4 +6,7 @@
     </style>
 
     <style name="Theme.GharKharch" parent="Base.Theme.GharKharch" />
+    <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color"  >@color/transparent_gray </item>
+    </style>
 </resources>

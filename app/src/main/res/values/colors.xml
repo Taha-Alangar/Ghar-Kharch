@@ -11,6 +11,7 @@
     <color name="darker_green">#1B5C58</color>
     <color name="light_gray">#AAAAAA</color>
     <color name="dark_gray">#979797</color>
+    <color name="darker_gray">#666666</color>
     <color name="transparent_gray">#FAFAFA</color>
     <color name="error_color">#EC2D1F</color>
 

@@ -23,7 +23,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="74dp"
         android:fontFamily="@font/inter_medium"
-        android:text="Good afternoon,"
+        android:text="Welcome back ,"
         android:textColor="@color/white"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"

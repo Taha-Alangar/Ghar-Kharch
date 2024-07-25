@@ -71,19 +71,52 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayout21"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="8dp"
+                        android:hint="Income Type"
+                        android:visibility="gone"
+                        android:textColorHint="@color/light_green"
+                        app:boxBackgroundMode="outline"
+                        app:boxStrokeColor="@color/light_green"
+                        app:boxStrokeErrorColor="@color/error_color"
+                        app:boxStrokeWidth="2dp"
+                        app:boxStrokeWidthFocused="3dp"
+                        app:cursorColor="@color/light_green"
+                        app:endIconMode="clear_text"
+                        app:hintTextColor="@color/light_green"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtIncomeName"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:backgroundTint="@color/light_green"
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
+
+                            android:padding="10dp"
+                            android:textColor="@color/light_green" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
                     <TextView
                         android:id="@+id/textView6"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
-                        android:layout_marginTop="18dp"
                         android:fontFamily="@font/inter_medium"
                         android:text="Amount"
                         android:textColor="@color/dark_gray"
                         android:textSize="16sp"
+                        android:layout_marginTop="80dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/spinnerName" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayout2"
@@ -160,6 +193,8 @@
                             android:imeOptions="actionDone"
                             android:inputType="text"
                             android:padding="10dp"
+                            android:focusable="false"
+                            android:clickable="true"
                             android:textColor="@color/light_green" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -213,18 +248,15 @@
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
-    <TextView
+    <Spinner
         android:id="@+id/ExpenseIncomeToggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
-        android:text="Expense"
         android:fontFamily="@font/inter_semibold"
         android:background="@drawable/spinner_border_bg"
-        android:elevation="8dp"
-        android:textSize="15sp"
         android:textColor="@color/white"
-        android:padding="12dp"
+        android:padding="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/tvAddEI"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvAddEI" />

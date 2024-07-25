@@ -9,7 +9,7 @@
 
 
     <ImageView
-        android:id="@+id/C.E.img_back"
+        android:id="@+id/C_E_img_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -38,10 +38,10 @@
         android:text="Category Expenditure"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/C.E.img_back"
+        app:layout_constraintBottom_toBottomOf="@+id/C_E_img_back"
         app:layout_constraintEnd_toStartOf="@+id/C.E.download"
-        app:layout_constraintStart_toEndOf="@+id/C.E.img_back"
-        app:layout_constraintTop_toTopOf="@+id/C.E.img_back" />
+        app:layout_constraintStart_toEndOf="@+id/C_E_img_back"
+        app:layout_constraintTop_toTopOf="@+id/C_E_img_back" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
@@ -103,13 +103,14 @@
             android:layout_marginHorizontal="32dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/spinner_border_bg"
-            android:padding="14dp"
+            android:padding="8dp"
+            android:popupBackground="@color/transparent_gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/C.E.Rv"
+            android:id="@+id/C_E_Rv"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="12dp"

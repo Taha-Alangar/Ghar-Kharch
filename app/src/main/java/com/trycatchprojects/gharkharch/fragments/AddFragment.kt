@@ -147,7 +147,7 @@ class AddFragment : Fragment() {
                 val categoryDao = AppDatabase.getDatabase(requireContext()).categoryDao()
                 val selectedCategory = categoryDao.getAllCategories()[spinnerPosition]
 
-                val expense = ExpenseEntity(categoryId = selectedCategory.id, amount = expenseAmount, date = expenseDate)
+                val expense = ExpenseEntity(categoryId = selectedCategory.id, amount = expenseAmount, name = selectedCategory.name,date = expenseDate)
                 val expenseDao = AppDatabase.getDatabase(requireContext()).expenseDao()
                 expenseDao.insertExpense(expense)
 

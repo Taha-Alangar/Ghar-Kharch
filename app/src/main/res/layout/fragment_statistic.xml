@@ -1,14 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".fragments.StatisticFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/img_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/icon_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/black" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_semibold"
+        android:gravity="center"
+        android:text="Statistics"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/img_back"
+        app:layout_constraintEnd_toStartOf="@+id/img_download"
+        app:layout_constraintStart_toEndOf="@+id/img_back"
+        app:layout_constraintTop_toTopOf="@+id/img_back" />
+
+    <ImageView
+        android:id="@+id/img_download"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:src="@drawable/icon_download"
+        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/tvDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/spinner_border_bg"
+        android:backgroundTint="@color/dark_green"
+        android:fontFamily="@font/inter"
+        android:paddingHorizontal="22dp"
+        android:paddingVertical="6dp"
+        android:text="Day"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvWeek"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/tvWeek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/spinner_border_bg"
+        android:backgroundTint="@color/dark_green"
+        android:fontFamily="@font/inter"
+        android:paddingHorizontal="22dp"
+        android:paddingVertical="6dp"
+        android:text="Week"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvMonth"
+        app:layout_constraintStart_toEndOf="@+id/tvDay"
+        app:layout_constraintTop_toTopOf="@+id/tvDay" />
+
+    <TextView
+        android:id="@+id/tvMonth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/spinner_border_bg"
+        android:backgroundTint="@color/dark_green"
+        android:fontFamily="@font/inter"
+        android:paddingHorizontal="22dp"
+        android:paddingVertical="6dp"
+        android:text="Month"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvYear"
+        app:layout_constraintStart_toEndOf="@+id/tvWeek"
+        app:layout_constraintTop_toTopOf="@+id/tvWeek" />
+
+    <TextView
+        android:id="@+id/tvYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/spinner_border_bg"
+        android:backgroundTint="@color/dark_green"
+        android:fontFamily="@font/inter"
+        android:paddingHorizontal="22dp"
+        android:paddingVertical="6dp"
+        android:text="Year"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvMonth"
+        app:layout_constraintTop_toTopOf="@+id/tvMonth" />
+
+    <Spinner
+        android:id="@+id/ExpenseIncomeSpinner"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/spinner_border_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvYear" />
+
+
+    <TextView
+        android:id="@+id/tvChartData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/spinner_border_bg"
+        android:backgroundTint="@color/transparent_green"
+        android:fontFamily="@font/inter_semibold"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="8dp"
+        android:text="Chart Data"
+        android:textColor="@color/dark_green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ExpenseIncomeSpinner" />
+
+    <com.db.williamchart.view.LineChartView
+        android:id="@+id/lineChart"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="12dp"
+        app:chart_axis="none"
+        app:chart_gridEffect="dotted"
+        app:chart_lineColor="@color/dark_green"
+        app:chart_lineThickness="3dp"
+        app:chart_smoothLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvChartData" />
+
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Top Spending"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lineChart" />
+
+    <ImageView
+        android:id="@+id/img_sortAcseDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:src="@drawable/icon_sort"
+        app:layout_constraintBottom_toBottomOf="@+id/textView23"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView23" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/topSpendingRV"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

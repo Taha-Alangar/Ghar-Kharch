@@ -3,12 +3,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="light_green">#63B5AF</color>
-    <color name="dark_green">#438883</color>
-    <color name="darker_green_2">#29756F</color>
+    <color name="light_green">#FAC42F</color>
+    <color name="dark_green">#F3B431</color>
+    <color name="darker_green_2">#FAD02E</color>
     <color name="transparent_green">#D0E5E4</color>
 
-    <color name="darker_green">#1B5C58</color>
+    <color name="darker_green">#FFB300</color>
     <color name="light_gray">#AAAAAA</color>
     <color name="dark_gray">#979797</color>
     <color name="darker_gray">#666666</color>
@@ -16,7 +16,7 @@
     <color name="error_color">#EC2D1F</color>
 
     <color name="navi">#1199AA</color>
-    <color name="red">#E53935</color>
-    <color name="yellow">#FFB300</color>
+    <color name="red">#E53935 </color>
+    <color name="yellow">#ffa700</color>
 
 </resources>

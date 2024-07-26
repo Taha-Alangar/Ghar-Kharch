@@ -24,31 +24,43 @@ import java.util.Calendar
 class StatisticFragment : Fragment() {
     private lateinit var binding:FragmentStatisticBinding
     private var selectedType: String = "Expense" // Default to Expense
+    private var isSortAscending: Boolean = true
+    private var startDate: Long = 0L
+    private var endDate: Long = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentStatisticBinding.inflate(layoutInflater)
-
         setUpExpenseIncomeToggle()
         setupClickListeners()
 
         binding.imgBack.setOnClickListener {
             findNavController().navigate(R.id.action_statisticFragment_to_homeFragment)
         }
-        binding.apply {
-            lineChart.gradientFillColors= intArrayOf(
-                Color.parseColor("#63B5AF"),
-                Color.TRANSPARENT,
-            )
-            lineChart.animation.duration= animationDuration
-            lineChart.animate(lineSet)
 
-            lineChart.onDataPointTouchListener={index,_,_ ->
-                tvChartData.text= lineSet.toList()[index].second.toString()
-            }
+        binding.imgSortAcseDesc.setOnClickListener {
+            isSortAscending = !isSortAscending
+            // Sort data based on the current date range and type
+            fetchData(startDate, endDate)
         }
+
+        // Set default to show today's data
+        val calendar = Calendar.getInstance()
+        startDate = calendar.apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.timeInMillis
+        endDate = calendar.apply {
+            set(Calendar.HOUR_OF_DAY, 23)
+            set(Calendar.MINUTE, 59)
+            set(Calendar.SECOND, 59)
+            set(Calendar.MILLISECOND, 999)
+        }.timeInMillis
+        fetchData(startDate, endDate)
 
 
         return binding.root
@@ -57,78 +69,79 @@ class StatisticFragment : Fragment() {
     private fun setupClickListeners() {
         binding.tvDay.setOnClickListener {
             val calendar = Calendar.getInstance()
-            val startOfDay = calendar.apply {
+            startDate = calendar.apply {
                 set(Calendar.HOUR_OF_DAY, 0)
                 set(Calendar.MINUTE, 0)
                 set(Calendar.SECOND, 0)
                 set(Calendar.MILLISECOND, 0)
             }.timeInMillis
-            val endOfDay = calendar.apply {
+            endDate = calendar.apply {
                 set(Calendar.HOUR_OF_DAY, 23)
                 set(Calendar.MINUTE, 59)
                 set(Calendar.SECOND, 59)
                 set(Calendar.MILLISECOND, 999)
             }.timeInMillis
-            fetchData(startOfDay, endOfDay)
+            fetchData(startDate, endDate)
         }
 
         binding.tvWeek.setOnClickListener {
             val calendar = Calendar.getInstance()
-            val startOfWeek = calendar.apply {
+            startDate = calendar.apply {
                 set(Calendar.DAY_OF_WEEK, calendar.firstDayOfWeek)
                 set(Calendar.HOUR_OF_DAY, 0)
                 set(Calendar.MINUTE, 0)
                 set(Calendar.SECOND, 0)
                 set(Calendar.MILLISECOND, 0)
             }.timeInMillis
-            val endOfWeek = calendar.apply {
+            endDate = calendar.apply {
                 set(Calendar.DAY_OF_WEEK, calendar.firstDayOfWeek + 6)
                 set(Calendar.HOUR_OF_DAY, 23)
                 set(Calendar.MINUTE, 59)
                 set(Calendar.SECOND, 59)
                 set(Calendar.MILLISECOND, 999)
             }.timeInMillis
-            fetchData(startOfWeek, endOfWeek)
+            fetchData(startDate, endDate)
         }
 
         binding.tvMonth.setOnClickListener {
             val calendar = Calendar.getInstance()
-            val startOfMonth = calendar.apply {
+            startDate = calendar.apply {
                 set(Calendar.DAY_OF_MONTH, 1)
                 set(Calendar.HOUR_OF_DAY, 0)
                 set(Calendar.MINUTE, 0)
                 set(Calendar.SECOND, 0)
                 set(Calendar.MILLISECOND, 0)
             }.timeInMillis
-            val endOfMonth = calendar.apply {
+            endDate = calendar.apply {
                 set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH))
                 set(Calendar.HOUR_OF_DAY, 23)
                 set(Calendar.MINUTE, 59)
                 set(Calendar.SECOND, 59)
                 set(Calendar.MILLISECOND, 999)
             }.timeInMillis
-            fetchData(startOfMonth, endOfMonth)
+            fetchData(startDate, endDate)
         }
 
         binding.tvYear.setOnClickListener {
             val calendar = Calendar.getInstance()
-            val startOfYear = calendar.apply {
+            startDate = calendar.apply {
                 set(Calendar.DAY_OF_YEAR, 1)
                 set(Calendar.HOUR_OF_DAY, 0)
                 set(Calendar.MINUTE, 0)
                 set(Calendar.SECOND, 0)
                 set(Calendar.MILLISECOND, 0)
             }.timeInMillis
-            val endOfYear = calendar.apply {
+            endDate = calendar.apply {
                 set(Calendar.DAY_OF_YEAR, calendar.getActualMaximum(Calendar.DAY_OF_YEAR))
                 set(Calendar.HOUR_OF_DAY, 23)
                 set(Calendar.MINUTE, 59)
                 set(Calendar.SECOND, 59)
                 set(Calendar.MILLISECOND, 999)
             }.timeInMillis
-            fetchData(startOfYear, endOfYear)
+            fetchData(startDate, endDate)
         }
     }
+
 
 
     private fun fetchData(startDate: Long, endDate: Long) {
@@ -143,9 +156,14 @@ class StatisticFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             val expenseDao = AppDatabase.getDatabase(requireContext()).expenseDao()
             val expenses = expenseDao.getExpensesByDateRange(startDate, endDate)
+            val sortedExpenses = if (isSortAscending) {
+                expenses.sortedBy { it.amount }
+            } else {
+                expenses.sortedByDescending { it.amount }
+            }
             withContext(Dispatchers.Main) {
-                Log.d("StatisticFragment", "Fetched expense data: $expenses")
-                updateUI(expenses)
+                Log.d("StatisticFragment", "Fetched and sorted expense data: $sortedExpenses")
+                updateUI(sortedExpenses)
             }
         }
     }
@@ -154,12 +172,18 @@ class StatisticFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             val incomeDao = AppDatabase.getDatabase(requireContext()).incomeDao()
             val incomes = incomeDao.getIncomesByDateRange(startDate, endDate)
+            val sortedIncomes = if (isSortAscending) {
+                incomes.sortedBy { it.amount }
+            } else {
+                incomes.sortedByDescending { it.amount }
+            }
             withContext(Dispatchers.Main) {
-                Log.d("StatisticFragment", "Fetched income data: $incomes")
-                updateUI(incomes)
+                Log.d("StatisticFragment", "Fetched and sorted income data: $sortedIncomes")
+                updateUI(sortedIncomes)
             }
         }
     }
+
 
 
     private fun updateUI(data: List<Any>) {
@@ -184,43 +208,10 @@ class StatisticFragment : Fragment() {
                 id: Long,
             ) {
                 selectedType = if (position == 0) "Expense" else "Income"
-                val calendar = Calendar.getInstance()
-                val startDate = calendar.apply {
-                    set(Calendar.HOUR_OF_DAY, 0)
-                    set(Calendar.MINUTE, 0)
-                    set(Calendar.SECOND, 0)
-                    set(Calendar.MILLISECOND, 0)
-                }.timeInMillis
-                val endDate = calendar.apply {
-                    set(Calendar.HOUR_OF_DAY, 23)
-                    set(Calendar.MINUTE, 59)
-                    set(Calendar.SECOND, 59)
-                    set(Calendar.MILLISECOND, 999)
-                }.timeInMillis
                 fetchData(startDate, endDate)
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
     }
-    companion object{
-        private val lineSet= listOf(
-            "label1" to 4.5f,
-            "label2" to 6f,
-            "label3" to 10f,
-            "label4" to 3f,
-            "label5" to 2.5f,
-            "label6" to 1.5f,
-            "label6" to 2.5f,
-            "label6" to 0.5f,
-            "label6" to 4.5f,
-            "label6" to 6.5f,
-            "label6" to 20.5f,
-            "label6" to 9.5f,
-            "label6" to 10.5f,
-
-            )
-        private const val animationDuration=1000L
-    }
-
 }

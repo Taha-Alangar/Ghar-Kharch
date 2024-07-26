@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ghar_kharch_bg"
+    android:backgroundTint="@color/yellow"
     tools:context=".fragments.CategoryExpenditureFragment">
 
 
@@ -13,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:src="@drawable/icon_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -102,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/spinner_border_bg"
+            android:background="@drawable/spinner_border_bg2"
             android:padding="8dp"
             android:popupBackground="@color/transparent_gray"
             app:layout_constraintEnd_toEndOf="parent"

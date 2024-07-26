@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:src="@drawable/icon_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -50,7 +50,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/spinner_border_bg"
-        android:backgroundTint="@color/dark_green"
+        android:backgroundTint="@color/darker_green"
         android:fontFamily="@font/inter"
         android:paddingHorizontal="22dp"
         android:paddingVertical="6dp"
@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/spinner_border_bg"
-        android:backgroundTint="@color/dark_green"
+        android:backgroundTint="@color/darker_green"
         android:fontFamily="@font/inter"
         android:paddingHorizontal="22dp"
         android:paddingVertical="6dp"
@@ -83,7 +83,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/spinner_border_bg"
-        android:backgroundTint="@color/dark_green"
+        android:backgroundTint="@color/darker_green"
         android:fontFamily="@font/inter"
         android:paddingHorizontal="22dp"
         android:paddingVertical="6dp"
@@ -100,7 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:background="@drawable/spinner_border_bg"
-        android:backgroundTint="@color/dark_green"
+        android:backgroundTint="@color/darker_green"
         android:fontFamily="@font/inter"
         android:paddingHorizontal="22dp"
         android:paddingVertical="6dp"
@@ -117,40 +117,9 @@
         android:layout_height="40dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/spinner_border_bg"
+        android:background="@drawable/spinner_border_bg2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvYear" />
-
-
-    <TextView
-        android:id="@+id/tvChartData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/spinner_border_bg"
-        android:backgroundTint="@color/transparent_green"
-        android:fontFamily="@font/inter_semibold"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="8dp"
-        android:text="Chart Data"
-        android:textColor="@color/dark_green"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ExpenseIncomeSpinner" />
-
-    <com.db.williamchart.view.LineChartView
-        android:id="@+id/lineChart"
-        android:layout_width="0dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="12dp"
-        app:chart_axis="none"
-        app:chart_gridEffect="dotted"
-        app:chart_lineColor="@color/dark_green"
-        app:chart_lineThickness="3dp"
-        app:chart_smoothLine="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvChartData" />
 
 
     <TextView
@@ -158,13 +127,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/inter_semibold"
         android:text="Top Spending"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lineChart" />
+        app:layout_constraintTop_toBottomOf="@+id/ExpenseIncomeSpinner" />
 
     <ImageView
         android:id="@+id/img_sortAcseDesc"

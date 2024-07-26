@@ -15,14 +15,15 @@
         android:src="@drawable/ghar_kharch_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/yellow" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="74dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="@font/inter_medium"
         android:text="Welcome back ,"
         android:textColor="@color/white"
@@ -104,7 +105,7 @@
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/inter_bold"
                 android:text="Income"
-                android:textColor="@color/transparent_green"
+                android:textColor="@color/transparent_gray"
 
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/imageView5"
@@ -114,10 +115,11 @@
                 android:id="@+id/imageView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="32dp"
                 android:src="@drawable/icon_down_arrow"
                 app:layout_constraintStart_toStartOf="@+id/tvTotalBalance"
-                app:layout_constraintTop_toBottomOf="@+id/tvTotalBalance" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTotalBalance"
+                app:tint="@color/white" />
 
             <TextView
                 android:id="@+id/tvIncome"
@@ -140,7 +142,8 @@
                 android:layout_marginEnd="8dp"
                 android:src="@drawable/icon_up_arrow"
                 app:layout_constraintEnd_toStartOf="@+id/textView11"
-                app:layout_constraintTop_toTopOf="@+id/textView9" />
+                app:layout_constraintTop_toTopOf="@+id/textView9"
+                app:tint="@color/white" />
 
             <TextView
                 android:id="@+id/textView11"
@@ -149,7 +152,7 @@
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/inter_bold"
                 android:text="Expense"
-                android:textColor="@color/transparent_green"
+                android:textColor="@color/transparent_gray"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/imageView6" />
@@ -196,7 +199,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

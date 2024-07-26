@@ -15,15 +15,16 @@
             android:layout_height="match_parent">
 
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ghar_kharch_bg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="414dp"
+                android:layout_height="299dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ghar_kharch_bg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/yellow" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
@@ -64,7 +65,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/spinner_border_bg"
+                        android:background="@drawable/spinner_border_bg2"
                         android:padding="8dp"
                         android:popupBackground="@color/transparent_gray"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -101,7 +102,7 @@
                             android:inputType="text"
 
                             android:padding="10dp"
-                            android:textColor="@color/light_green" />
+                            android:textColor="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
@@ -127,7 +128,7 @@
                         android:hint="Enter amount"
                         android:textColorHint="@color/light_green"
                         app:boxBackgroundMode="outline"
-                        app:boxStrokeColor="@color/light_green"
+                        app:boxStrokeColor="@color/darker_green"
                         app:boxStrokeErrorColor="@color/error_color"
                         app:boxStrokeWidth="2dp"
                         app:boxStrokeWidthFocused="3dp"
@@ -146,7 +147,7 @@
                             android:imeOptions="actionDone"
                             android:inputType="text"
                             android:padding="10dp"
-                            android:textColor="@color/light_green" />
+                            android:textColor="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
@@ -170,9 +171,9 @@
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="8dp"
                         android:hint="Enter Date"
-                        android:textColorHint="@color/light_green"
+                        android:textColorHint="@color/black"
                         app:boxBackgroundMode="outline"
-                        app:boxStrokeColor="@color/light_green"
+                        app:boxStrokeColor="@color/darker_green"
                         app:boxStrokeErrorColor="@color/error_color"
                         app:boxStrokeWidth="2dp"
                         app:boxStrokeWidthFocused="3dp"
@@ -227,7 +228,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:src="@drawable/icon_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -254,6 +255,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/inter_semibold"
+        android:elevation="20dp"
         android:background="@drawable/spinner_border_bg"
         android:textColor="@color/white"
         android:padding="6dp"

@@ -35,24 +35,26 @@ class AddFragment : Fragment() {
     ): View {
         binding = FragmentAddBinding.inflate(layoutInflater)
 
+
         // Set default date
         setDefaultDate()
 
         // Set up date picker dialog
         setUpDatePicker()
 
-        //category Spinner
+        // Category Spinner
         setUpCategorySpinner()
-        //setupExpenseIncomeCategoryToggleSpinner
-        setUpEICSpinner()
-        //addExpenseIncomeCategory
 
-        //set up add button listener
+        // Setup Expense/Income/Category Toggle Spinner
+        setUpEICSpinner()
+
+        // Set up add button listener
         setAddButtonListener()
 
         binding.imageView3.setOnClickListener {
             findNavController().navigate(R.id.action_addFragment_to_homeFragment)
         }
+
         return binding.root
     }
     private fun setUpDatePicker() {
@@ -77,6 +79,7 @@ class AddFragment : Fragment() {
             datePickerDialog.show()
         }
     }
+
     private fun setDefaultDate() {
         val currentDate = Date()
         val dateFormat = SimpleDateFormat("d MMM yyyy", Locale.getDefault())
@@ -95,30 +98,31 @@ class AddFragment : Fragment() {
     }
 
     private fun addCategory() {
-            val categoryName = binding.edtIncomeName.text.toString().trim()
-            if (categoryName.isNotEmpty()) {
-                val category = CategoryEntity(name = categoryName)
-                CoroutineScope(Dispatchers.IO).launch {
-                    val categoryDao = AppDatabase.getDatabase(requireContext()).categoryDao()
-                    categoryDao.insertCategory(category)
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(requireContext(), "Category added successfully", Toast.LENGTH_SHORT).show()
-                        binding.edtIncomeName.text!!.clear()
-                        setUpCategorySpinner() // Refresh the spinner after adding a new category
-                    }
+        val categoryName = binding.edtIncomeName.text.toString().trim()
+        if (categoryName.isNotEmpty()) {
+            val category = CategoryEntity(name = categoryName)
+            CoroutineScope(Dispatchers.IO).launch {
+                val categoryDao = AppDatabase.getDatabase(requireContext()).categoryDao()
+                categoryDao.insertCategory(category)
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), "Category added successfully", Toast.LENGTH_SHORT).show()
+                    binding.edtIncomeName.text!!.clear()
+                    setUpCategorySpinner() // Refresh the spinner after adding a new category
                 }
-            } else {
-                binding.edtIncomeName.error = "Category name cannot be empty"
             }
+        } else {
+            binding.edtIncomeName.error = "Category name cannot be empty"
+        }
     }
-
     private fun addIncome() {
         val incomeName = binding.edtIncomeName.text.toString().trim()
         val incomeAmount = binding.edtAmount.text.toString().toDoubleOrNull()
-        val incomeDate = binding.edtDate.text.toString().trim()
+        val incomeDateStr = binding.edtDate.text.toString().trim()
 
-        if (incomeName.isNotEmpty() && incomeAmount != null && incomeDate.isNotEmpty()) {
+        if (incomeName.isNotEmpty() && incomeAmount != null && incomeDateStr.isNotEmpty()) {
+            val incomeDate = SimpleDateFormat("d MMM yyyy", Locale.getDefault()).parse(incomeDateStr)?.time ?: System.currentTimeMillis()
             val income = IncomeEntity(name = incomeName, amount = incomeAmount, date = incomeDate)
+
             CoroutineScope(Dispatchers.IO).launch {
                 val incomeDao = AppDatabase.getDatabase(requireContext()).incomeDao()
                 incomeDao.insertIncome(income)
@@ -133,21 +137,23 @@ class AddFragment : Fragment() {
         } else {
             if (incomeName.isEmpty()) binding.edtIncomeName.error = "Income name cannot be empty"
             if (incomeAmount == null) binding.edtAmount.error = "Amount must be a number"
-            if (incomeDate.isEmpty()) binding.edtDate.error = "Date cannot be empty"
+            if (incomeDateStr.isEmpty()) binding.edtDate.error = "Date cannot be empty"
         }
     }
 
     private fun addExpense() {
-        val spinnerPosition=binding.spinnerName.selectedItemPosition
+        val spinnerPosition = binding.spinnerName.selectedItemPosition
         val expenseAmount = binding.edtAmount.text.toString().toDoubleOrNull()
-        val expenseDate = binding.edtDate.text.toString().trim()
+        val expenseDateStr = binding.edtDate.text.toString().trim()
 
-        if (expenseAmount != null && expenseDate.isNotEmpty()) {
+        if (expenseAmount != null && expenseDateStr.isNotEmpty()) {
+            val expenseDate = SimpleDateFormat("d MMM yyyy", Locale.getDefault()).parse(expenseDateStr)?.time ?: System.currentTimeMillis()
+
             CoroutineScope(Dispatchers.IO).launch {
                 val categoryDao = AppDatabase.getDatabase(requireContext()).categoryDao()
                 val selectedCategory = categoryDao.getAllCategories()[spinnerPosition]
 
-                val expense = ExpenseEntity(categoryId = selectedCategory.id, amount = expenseAmount, name = selectedCategory.name,date = expenseDate)
+                val expense = ExpenseEntity(categoryId = selectedCategory.id, amount = expenseAmount, name = selectedCategory.name, date = expenseDate)
                 val expenseDao = AppDatabase.getDatabase(requireContext()).expenseDao()
                 expenseDao.insertExpense(expense)
 
@@ -160,7 +166,7 @@ class AddFragment : Fragment() {
             }
         } else {
             if (expenseAmount == null) binding.edtAmount.error = "Amount must be a number"
-            if (expenseDate.isEmpty()) binding.edtDate.error = "Date cannot be empty"
+            if (expenseDateStr.isEmpty()) binding.edtDate.error = "Date cannot be empty"
         }
     }
 

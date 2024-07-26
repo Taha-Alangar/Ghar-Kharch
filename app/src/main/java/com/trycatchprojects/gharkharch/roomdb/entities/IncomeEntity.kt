@@ -9,5 +9,5 @@ data class IncomeEntity(
     val id: Int = 0,
     val name: String,
     val amount: Double,
-    val date: String
+    val date: Long
 )

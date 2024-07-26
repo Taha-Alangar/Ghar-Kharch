@@ -65,7 +65,9 @@ class HomeFragment : Fragment() {
 
                 val transactions = mutableListOf<Transaction>()
                 transactions.addAll(expenses.map {
-                    Transaction.Expense(it.id, it.categoryId, it.name, it.amount, it.date)
+                    Transaction.Expense(it.id, it.categoryId, it.name, it.amount,
+                        it.date
+                    )
                 })
                 transactions.addAll(incomes.map {
                     Transaction.Income(it.id, it.name, it.amount, it.date)

@@ -7,6 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.trycatchprojects.gharkharch.R
 import com.trycatchprojects.gharkharch.utils.Transaction
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class TransactionAdapter(private val transactions: List<Transaction>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -46,9 +48,10 @@ class TransactionAdapter(private val transactions: List<Transaction>) : Recycler
         private val tvDate: TextView = itemView.findViewById(R.id.tvDate)
         private val tvAmount: TextView = itemView.findViewById(R.id.tvAmount)
 
+
         fun bind(income: Transaction.Income) {
             tvName.text = income.name
-            tvDate.text = income.date
+            tvDate.text = formatDate(income.date)
             tvAmount.text = income.amount.toString()
         }
     }
@@ -60,8 +63,18 @@ class TransactionAdapter(private val transactions: List<Transaction>) : Recycler
 
         fun bind(expense: Transaction.Expense) {
             tvName.text = expense.name // You might want to customize this or include the category name
-            tvDate.text = expense.date
+            tvDate.text = formatDate(expense.date)
             tvAmount.text = expense.amount.toString()
         }
     }
+
+
+}
+
+
+// Utility function to format the date
+private fun formatDate(timestamp: Long): String {
+    val date = java.util.Date(timestamp)
+    val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+    return sdf.format(date)
 }

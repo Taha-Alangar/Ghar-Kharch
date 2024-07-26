@@ -19,4 +19,8 @@ interface ExpenseDao {
 
     @Query("SELECT SUM(amount) FROM expense")
     suspend fun getTotalExpense(): Double?
+
+    @Query("SELECT * FROM expense WHERE date BETWEEN :startDate AND :endDate")
+    suspend fun getExpensesByDateRange(startDate: Long, endDate: Long): List<ExpenseEntity>
+
 }

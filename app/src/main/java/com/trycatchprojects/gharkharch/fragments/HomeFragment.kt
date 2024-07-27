@@ -26,6 +26,9 @@ class HomeFragment : Fragment() {
     private lateinit var binding:FragmentHomeBinding
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var transactionAdapter: TransactionAdapter
+    private val expenseDao by lazy { AppDatabase.getDatabase(requireContext()).expenseDao() }
+    private val incomeDao by lazy { AppDatabase.getDatabase(requireContext()).incomeDao() }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,45 +48,44 @@ class HomeFragment : Fragment() {
         return binding.root
     }
     private fun getTransactionsRecord() {
-        // Assuming you have access to your DAO objects here
-        val expenseDao= AppDatabase.getDatabase(requireContext()).expenseDao()
-        val incomeDao = AppDatabase.getDatabase(requireContext()).incomeDao()
+        lifecycleScope.launch {
+            val expenses = expenseDao.getAllExpenses()
+            val incomes = incomeDao.getAllIncomes()
 
-            lifecycleScope.launch {
-                val expenses = expenseDao.getAllExpenses()
-                val incomes = incomeDao.getAllIncomes()
+            // Calculate totals
+            val totalExpense = expenses.sumOf { it.amount }
+            val totalIncome = incomes.sumOf { it.amount }
+            val totalBalance = totalIncome - totalExpense
 
-                // Calculate totals
-                val totalExpense = expenses.sumOf { it.amount }
-                val totalIncome = incomes.sumOf { it.amount }
-                val totalBalance = totalIncome - totalExpense
+            // Update UI with totals
+            binding.tvTotalBalance.text = "₹ $totalBalance"
+            binding.tvIncome.text = "₹ $totalIncome"
+            binding.tvExpense.text = "₹ $totalExpense"
 
-                // Update UI with totals
-                binding.tvTotalBalance.text = "$${totalBalance}"
-                binding.tvIncome.text = "$${totalIncome}"
-                binding.tvExpense.text = "$${totalExpense}"
+            val allTransactions = mutableListOf<Transaction>()
+            allTransactions.addAll(expenses.map {
+                Transaction.Expense(
+                    it.id, it.categoryId, it.name, it.amount, it.date
+                )
+            })
+            allTransactions.addAll(incomes.map {
+                Transaction.Income(
+                    it.id, it.name, it.amount, it.date
+                )
+            })
 
-                val transactions = mutableListOf<Transaction>()
-                transactions.addAll(expenses.map {
-                    Transaction.Expense(it.id, it.categoryId, it.name, it.amount,
-                        it.date
-                    )
-                })
-                transactions.addAll(incomes.map {
-                    Transaction.Income(it.id, it.name, it.amount, it.date)
-                })
-
-//                // Sort transactions as needed, for example by date
-                transactions.sortBy {transactions->
-                    when(transactions){
-                        is Transaction.Expense -> transactions.date
-                        is Transaction.Income -> transactions.date
-                    }
+            // Sort transactions by date and take the top 20 most recent
+            val topTransactions = allTransactions.sortedByDescending { transaction ->
+                when (transaction) {
+                    is Transaction.Expense -> transaction.date
+                    is Transaction.Income -> transaction.date
                 }
+            }.take(20)
 
-                transactionAdapter = TransactionAdapter(transactions)
-                binding.transactionRV.adapter = transactionAdapter
-            }
+            // Set up adapter with the top 20 transactions
+            transactionAdapter = TransactionAdapter(topTransactions)
+            binding.transactionRV.adapter = transactionAdapter
+        }
     }
 
 

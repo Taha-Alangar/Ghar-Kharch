@@ -76,7 +76,7 @@ class CategoryExpenditureFragment : Fragment() {
                 withContext(Dispatchers.Main) {
                     // Update the UI with the expenses and total expense
                     binding.CERv.adapter = C_E_Adapter(expenses)
-                    binding.CETotalExpenditure.text = expenses.sumOf { it.amount }.toString()
+                    binding.CETotalExpenditure.text = "₹ ${expenses.sumOf { it.amount }}"
 
                 }
 

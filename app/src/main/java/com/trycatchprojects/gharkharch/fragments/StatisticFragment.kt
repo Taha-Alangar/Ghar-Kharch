@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.trycatchprojects.gharkharch.R
@@ -27,6 +29,10 @@ class StatisticFragment : Fragment() {
     private var isSortAscending: Boolean = true
     private var startDate: Long = 0L
     private var endDate: Long = 0L
+    private var selectedYear: Int = Calendar.getInstance().get(Calendar.YEAR) // Default to current year
+    private var selectedPeriod: String = "Day" // Default to Day
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +40,7 @@ class StatisticFragment : Fragment() {
     ): View {
         binding = FragmentStatisticBinding.inflate(layoutInflater)
         setUpExpenseIncomeToggle()
+        setUpYearSpinner()
         setupClickListeners()
 
         binding.imgBack.setOnClickListener {
@@ -47,7 +54,38 @@ class StatisticFragment : Fragment() {
         }
 
         // Set default to show today's data
-        val calendar = Calendar.getInstance()
+        updateSelection(binding.tvDay)
+        fetchDayData() // Fetch initial data for the selected year and day period
+
+        return binding.root
+    }
+    private fun setupClickListeners() {
+        binding.tvDay.setOnClickListener {
+            updateSelection(binding.tvDay)
+            fetchDayData()
+        }
+
+        binding.tvWeek.setOnClickListener {
+            updateSelection(binding.tvWeek)
+            fetchWeekData()
+        }
+
+        binding.tvMonth.setOnClickListener {
+            updateSelection(binding.tvMonth)
+            fetchMonthData()
+        }
+
+        binding.tvYear.setOnClickListener {
+            updateSelection(binding.tvYear)
+            fetchYearData()
+        }
+    }
+
+    private fun fetchDayData() {
+        selectedPeriod = "Day"
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.YEAR, selectedYear)
+        }
         startDate = calendar.apply {
             set(Calendar.HOUR_OF_DAY, 0)
             set(Calendar.MINUTE, 0)
@@ -61,88 +99,87 @@ class StatisticFragment : Fragment() {
             set(Calendar.MILLISECOND, 999)
         }.timeInMillis
         fetchData(startDate, endDate)
-
-
-        return binding.root
     }
 
-    private fun setupClickListeners() {
-        binding.tvDay.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            startDate = calendar.apply {
-                set(Calendar.HOUR_OF_DAY, 0)
-                set(Calendar.MINUTE, 0)
-                set(Calendar.SECOND, 0)
-                set(Calendar.MILLISECOND, 0)
-            }.timeInMillis
-            endDate = calendar.apply {
-                set(Calendar.HOUR_OF_DAY, 23)
-                set(Calendar.MINUTE, 59)
-                set(Calendar.SECOND, 59)
-                set(Calendar.MILLISECOND, 999)
-            }.timeInMillis
-            fetchData(startDate, endDate)
+    private fun fetchWeekData() {
+        selectedPeriod = "Week"
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.YEAR, selectedYear)
         }
-
-        binding.tvWeek.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            startDate = calendar.apply {
-                set(Calendar.DAY_OF_WEEK, calendar.firstDayOfWeek)
-                set(Calendar.HOUR_OF_DAY, 0)
-                set(Calendar.MINUTE, 0)
-                set(Calendar.SECOND, 0)
-                set(Calendar.MILLISECOND, 0)
-            }.timeInMillis
-            endDate = calendar.apply {
-                set(Calendar.DAY_OF_WEEK, calendar.firstDayOfWeek + 6)
-                set(Calendar.HOUR_OF_DAY, 23)
-                set(Calendar.MINUTE, 59)
-                set(Calendar.SECOND, 59)
-                set(Calendar.MILLISECOND, 999)
-            }.timeInMillis
-            fetchData(startDate, endDate)
-        }
-
-        binding.tvMonth.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            startDate = calendar.apply {
-                set(Calendar.DAY_OF_MONTH, 1)
-                set(Calendar.HOUR_OF_DAY, 0)
-                set(Calendar.MINUTE, 0)
-                set(Calendar.SECOND, 0)
-                set(Calendar.MILLISECOND, 0)
-            }.timeInMillis
-            endDate = calendar.apply {
-                set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH))
-                set(Calendar.HOUR_OF_DAY, 23)
-                set(Calendar.MINUTE, 59)
-                set(Calendar.SECOND, 59)
-                set(Calendar.MILLISECOND, 999)
-            }.timeInMillis
-            fetchData(startDate, endDate)
-        }
-
-        binding.tvYear.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            startDate = calendar.apply {
-                set(Calendar.DAY_OF_YEAR, 1)
-                set(Calendar.HOUR_OF_DAY, 0)
-                set(Calendar.MINUTE, 0)
-                set(Calendar.SECOND, 0)
-                set(Calendar.MILLISECOND, 0)
-            }.timeInMillis
-            endDate = calendar.apply {
-                set(Calendar.DAY_OF_YEAR, calendar.getActualMaximum(Calendar.DAY_OF_YEAR))
-                set(Calendar.HOUR_OF_DAY, 23)
-                set(Calendar.MINUTE, 59)
-                set(Calendar.SECOND, 59)
-                set(Calendar.MILLISECOND, 999)
-            }.timeInMillis
-            fetchData(startDate, endDate)
-        }
+        startDate = calendar.apply {
+            set(Calendar.DAY_OF_WEEK, calendar.firstDayOfWeek)
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.timeInMillis
+        endDate = calendar.apply {
+            set(Calendar.DAY_OF_WEEK, calendar.firstDayOfWeek + 6)
+            set(Calendar.HOUR_OF_DAY, 23)
+            set(Calendar.MINUTE, 59)
+            set(Calendar.SECOND, 59)
+            set(Calendar.MILLISECOND, 999)
+        }.timeInMillis
+        fetchData(startDate, endDate)
     }
 
+    private fun fetchMonthData() {
+        selectedPeriod = "Month"
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.YEAR, selectedYear)
+        }
+        startDate = calendar.apply {
+            set(Calendar.DAY_OF_MONTH, 1)
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.timeInMillis
+        endDate = calendar.apply {
+            set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH))
+            set(Calendar.HOUR_OF_DAY, 23)
+            set(Calendar.MINUTE, 59)
+            set(Calendar.SECOND, 59)
+            set(Calendar.MILLISECOND, 999)
+        }.timeInMillis
+        fetchData(startDate, endDate)
+    }
 
+    private fun fetchYearData() {
+        selectedPeriod = "Year"
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.YEAR, selectedYear)
+        }
+        startDate = calendar.apply {
+            set(Calendar.DAY_OF_YEAR, 1)
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.timeInMillis
+        endDate = calendar.apply {
+            set(Calendar.DAY_OF_YEAR, calendar.getActualMaximum(Calendar.DAY_OF_YEAR))
+            set(Calendar.HOUR_OF_DAY, 23)
+            set(Calendar.MINUTE, 59)
+            set(Calendar.SECOND, 59)
+            set(Calendar.MILLISECOND, 999)
+        }.timeInMillis
+        fetchData(startDate, endDate)
+    }
+
+    private fun updateSelection(selectedTextView: TextView) {
+        resetSelections()
+        selectedTextView.setBackgroundResource(R.drawable.spinner_border_bg)
+        selectedTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+    }
+
+    private fun resetSelections() {
+        val textViews = listOf(binding.tvDay, binding.tvWeek, binding.tvMonth, binding.tvYear)
+        for (textView in textViews) {
+            textView.setBackgroundResource(0) // Remove background
+            textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.black)) // Set text color to black
+        }
+    }
 
     private fun fetchData(startDate: Long, endDate: Long) {
         when (selectedType) {
@@ -150,7 +187,6 @@ class StatisticFragment : Fragment() {
             "Income" -> fetchIncomeData(startDate, endDate)
         }
     }
-
 
     private fun fetchExpenseData(startDate: Long, endDate: Long) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -184,13 +220,12 @@ class StatisticFragment : Fragment() {
         }
     }
 
-
-
     private fun updateUI(data: List<Any>) {
         val adapter = StatisticAdapter(data)
         binding.topSpendingRV.layoutManager = LinearLayoutManager(requireContext())
         binding.topSpendingRV.adapter = adapter
     }
+
     private fun setUpExpenseIncomeToggle() {
         val list = listOf("Expense", "Income")
         val arrayAdapter = ArrayAdapter(
@@ -209,6 +244,38 @@ class StatisticFragment : Fragment() {
             ) {
                 selectedType = if (position == 0) "Expense" else "Income"
                 fetchData(startDate, endDate)
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+        }
+    }
+
+    private fun setUpYearSpinner() {
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+        val years = (2024..2054).toList()
+        val yearAdapter = ArrayAdapter(
+            requireContext(),
+            androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, years
+        )
+        yearAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
+        binding.spinnerYear.adapter = yearAdapter
+        binding.spinnerYear.setSelection(years.indexOf(currentYear))
+
+        binding.spinnerYear.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long,
+            ) {
+                selectedYear = years[position]
+                // Update the data shown according to the selected year and current period
+                when (selectedPeriod) {
+                    "Day" -> fetchDayData()
+                    "Week" -> fetchWeekData()
+                    "Month" -> fetchMonthData()
+                    "Year" -> fetchYearData()
+                }
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {}

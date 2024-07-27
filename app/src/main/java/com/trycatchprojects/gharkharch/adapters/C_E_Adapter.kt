@@ -2,7 +2,9 @@ package com.trycatchprojects.gharkharch.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.trycatchprojects.gharkharch.R
 import com.trycatchprojects.gharkharch.databinding.ItemViewExpenseIncomeBinding
 import com.trycatchprojects.gharkharch.roomdb.entities.ExpenseEntity
 import java.text.SimpleDateFormat
@@ -30,7 +32,10 @@ class C_E_Adapter(private val expenses: List<ExpenseEntity>) : RecyclerView.Adap
         val expense = expenses[position]
         holder.binding.tvName.text = expense.name
         holder.binding.tvDate.text = formatDate(expense.date)
-        holder.binding.tvAmount.text = expense.amount.toString()
+        holder.binding.tvAmount.text = "₹ ${expense.amount}"
+        holder.binding.tvAmount.setTextColor(ContextCompat.getColor(holder.binding.root.context, R.color.expense_color))
+
+
     }
     // Utility function to format the date
     private fun formatDate(timestamp: Long): String {

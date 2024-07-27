@@ -7,6 +7,9 @@
     <color name="dark_green">#F3B431</color>
     <color name="darker_green_2">#FAD02E</color>
     <color name="transparent_green">#D0E5E4</color>
+    <color name="expense_color">#F44336</color>
+    <color name="income_color">#40BA45</color>
+
 
     <color name="darker_green">#FFB300</color>
     <color name="light_gray">#AAAAAA</color>

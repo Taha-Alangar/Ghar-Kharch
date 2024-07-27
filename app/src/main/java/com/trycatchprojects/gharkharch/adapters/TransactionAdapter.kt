@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.trycatchprojects.gharkharch.R
 import com.trycatchprojects.gharkharch.utils.Transaction
@@ -52,9 +53,12 @@ class TransactionAdapter(private val transactions: List<Transaction>) : Recycler
         fun bind(income: Transaction.Income) {
             tvName.text = income.name
             tvDate.text = formatDate(income.date)
-            tvAmount.text = income.amount.toString()
+            tvAmount.text = "₹ ${income.amount}"
+            tvAmount.setTextColor(ContextCompat.getColor(itemView.context, R.color.income_color))
+
         }
     }
+
 
     class ExpenseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvName: TextView = itemView.findViewById(R.id.tvName)
@@ -64,14 +68,11 @@ class TransactionAdapter(private val transactions: List<Transaction>) : Recycler
         fun bind(expense: Transaction.Expense) {
             tvName.text = expense.name // You might want to customize this or include the category name
             tvDate.text = formatDate(expense.date)
-            tvAmount.text = expense.amount.toString()
+            tvAmount.text = "₹ ${expense.amount}"
+            tvAmount.setTextColor(ContextCompat.getColor(itemView.context, R.color.expense_color))
         }
     }
-
-
 }
-
-
 // Utility function to format the date
 private fun formatDate(timestamp: Long): String {
     val date = java.util.Date(timestamp)

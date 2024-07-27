@@ -3,7 +3,9 @@ package com.trycatchprojects.gharkharch.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.trycatchprojects.gharkharch.R
 import com.trycatchprojects.gharkharch.databinding.ItemViewExpenseIncomeBinding
 import com.trycatchprojects.gharkharch.roomdb.entities.ExpenseEntity
 import com.trycatchprojects.gharkharch.roomdb.entities.IncomeEntity
@@ -18,12 +20,16 @@ class StatisticAdapter(private val items: List<Any>) :
         fun bind(item: Any) {
             if (item is ExpenseEntity) {
                 binding.tvName.text = item.name
-                binding.tvAmount.text = item.amount.toString()
+                binding.tvAmount.text = "₹ ${item.amount}"
                 binding.tvDate.text = formatDate(item.date)
+                binding.tvAmount.setTextColor(ContextCompat.getColor(binding.root.context, R.color.expense_color))
+
             } else if (item is IncomeEntity) {
                 binding.tvName.text = item.name
-                binding.tvAmount.text = item.amount.toString()
+                binding.tvAmount.text = "₹ ${item.amount}"
                 binding.tvDate.text = formatDate(item.date)
+                binding.tvAmount.setTextColor(ContextCompat.getColor(binding.root.context, R.color.income_color))
+
             }
         }
     }

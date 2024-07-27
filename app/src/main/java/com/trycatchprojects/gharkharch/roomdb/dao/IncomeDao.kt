@@ -1,6 +1,7 @@
 package com.trycatchprojects.gharkharch.roomdb.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -19,5 +20,9 @@ interface IncomeDao {
 
     @Query("SELECT * FROM income WHERE date BETWEEN :startDate AND :endDate")
     suspend fun getIncomesByDateRange(startDate: Long, endDate: Long): List<IncomeEntity>
+
+    @Delete
+    suspend fun delete(income: IncomeEntity)
+
 
 }

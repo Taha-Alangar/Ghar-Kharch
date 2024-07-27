@@ -1,5 +1,6 @@
 package com.trycatchprojects.gharkharch.fragments
 
+import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +18,8 @@ import com.trycatchprojects.gharkharch.R
 import com.trycatchprojects.gharkharch.adapters.StatisticAdapter
 import com.trycatchprojects.gharkharch.databinding.FragmentStatisticBinding
 import com.trycatchprojects.gharkharch.roomdb.AppDatabase
+import com.trycatchprojects.gharkharch.roomdb.entities.ExpenseEntity
+import com.trycatchprojects.gharkharch.roomdb.entities.IncomeEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -221,11 +224,43 @@ class StatisticFragment : Fragment() {
     }
 
     private fun updateUI(data: List<Any>) {
-        val adapter = StatisticAdapter(data)
+        val adapter = StatisticAdapter(data) { item ->
+            showDeleteConfirmationDialog(item)
+        }
         binding.topSpendingRV.layoutManager = LinearLayoutManager(requireContext())
         binding.topSpendingRV.adapter = adapter
     }
 
+    private fun showDeleteConfirmationDialog(item: Any) {
+        val itemName = when (item) {
+            is ExpenseEntity -> item.name
+            is IncomeEntity -> item.name
+            else -> "Item"
+        }
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("Delete Item")
+            .setMessage("Are you sure you want to delete '$itemName'?")
+            .setPositiveButton("Yes") { _, _ ->
+                deleteItem(item)
+            }
+            .setNegativeButton("No", null)
+            .show()
+    }
+
+    private fun deleteItem(item: Any) {
+        CoroutineScope(Dispatchers.IO).launch {
+            when (item) {
+                is ExpenseEntity -> {
+                    AppDatabase.getDatabase(requireContext()).expenseDao().delete(item)
+                }
+                is IncomeEntity -> {
+                    AppDatabase.getDatabase(requireContext()).incomeDao().delete(item)
+                }
+            }
+            fetchData(startDate, endDate) // Refresh data after deletion
+        }
+    }
     private fun setUpExpenseIncomeToggle() {
         val list = listOf("Expense", "Income")
         val arrayAdapter = ArrayAdapter(

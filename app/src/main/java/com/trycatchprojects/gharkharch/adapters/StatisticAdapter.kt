@@ -12,7 +12,8 @@ import com.trycatchprojects.gharkharch.roomdb.entities.IncomeEntity
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class StatisticAdapter(private val items: List<Any>) :
+class StatisticAdapter(private val items: List<Any>,
+                       private val onItemLongClick: (Any) -> Unit) :
     RecyclerView.Adapter<StatisticAdapter.StatisticViewHolder>() {
 
     inner class StatisticViewHolder(private val binding: ItemViewExpenseIncomeBinding) :
@@ -30,6 +31,11 @@ class StatisticAdapter(private val items: List<Any>) :
                 binding.tvDate.text = formatDate(item.date)
                 binding.tvAmount.setTextColor(ContextCompat.getColor(binding.root.context, R.color.income_color))
 
+            }
+            // Handle long press
+            binding.root.setOnLongClickListener {
+                onItemLongClick(item)
+                true
             }
         }
     }

@@ -107,8 +107,19 @@
             android:padding="8dp"
             android:popupBackground="@color/transparent_gray"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
+        <Spinner
+            android:id="@+id/yearSpinner"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/spinner_border_bg2"
+            android:padding="8dp"
+            android:popupBackground="@color/transparent_gray"
+            app:layout_constraintBottom_toBottomOf="@+id/C.E.Spinner"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/C.E.Spinner" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/C_E_Rv"

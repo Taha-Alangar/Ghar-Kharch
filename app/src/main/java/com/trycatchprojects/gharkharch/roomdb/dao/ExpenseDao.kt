@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.trycatchprojects.gharkharch.roomdb.entities.ExpenseEntity
+import com.trycatchprojects.gharkharch.utils.Transaction
 
 @Dao
 interface ExpenseDao {
@@ -26,6 +27,12 @@ interface ExpenseDao {
 
     @Delete
     suspend fun delete(expense: ExpenseEntity)
+
+    @Query("SELECT * FROM expense WHERE categoryId = :categoryId AND date BETWEEN :startDate AND :endDate")
+    fun getExpensesByCategoryIdAndDateRange(categoryId: Int, startDate: Long, endDate: Long): List<ExpenseEntity>
+
+    @Query("SELECT * FROM expense WHERE strftime('%Y', date) = :year")
+    fun getExpensesByYear(year: String): List<ExpenseEntity>
 
 
 }

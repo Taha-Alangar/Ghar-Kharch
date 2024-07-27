@@ -60,6 +60,10 @@ class AddFragment : Fragment() {
     private fun setUpDatePicker() {
         binding.edtDate.setOnClickListener {
             val calendar = Calendar.getInstance()
+            val currentYear = calendar.get(Calendar.YEAR)
+            val minYear = 2024 // Minimum year allowed
+
+            // Set initial year, month, and day
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
             val day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -67,15 +71,33 @@ class AddFragment : Fragment() {
             val datePickerDialog = DatePickerDialog(
                 requireContext(),
                 { _, selectedYear, selectedMonth, selectedDay ->
-                    val selectedDate = Calendar.getInstance()
-                    selectedDate.set(selectedYear, selectedMonth, selectedDay)
-                    val dateFormat = SimpleDateFormat("d MMM yyyy", Locale.getDefault())
-                    binding.edtDate.setText(dateFormat.format(selectedDate.time))
+                    val selectedDate = Calendar.getInstance().apply {
+                        set(selectedYear, selectedMonth, selectedDay)
+                    }
+
+                    // Ensure that selected year is 2024 or later
+                    if (selectedYear >= minYear) {
+                        val dateFormat = SimpleDateFormat("d MMM yyyy", Locale.getDefault())
+                        binding.edtDate.setText(dateFormat.format(selectedDate.time))
+                    } else {
+                        Toast.makeText(requireContext(), "Please select a date from 2024 or later", Toast.LENGTH_SHORT).show()
+                        // Optionally, reset to default date or current date
+                        setDefaultDate()
+                    }
                 },
                 year,
                 month,
                 day
             )
+
+            // Customize the DatePickerDialog to restrict year range
+            datePickerDialog.datePicker.minDate = Calendar.getInstance().apply {
+                set(minYear, Calendar.JANUARY, 1)
+            }.timeInMillis
+            datePickerDialog.datePicker.maxDate = Calendar.getInstance().apply {
+                set(Calendar.YEAR, 2100) // You can set this to a sensible maximum year
+            }.timeInMillis
+
             datePickerDialog.show()
         }
     }

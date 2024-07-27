@@ -17,6 +17,8 @@ import com.trycatchprojects.gharkharch.databinding.FragmentHomeBinding
 import com.trycatchprojects.gharkharch.roomdb.AppDatabase
 import com.trycatchprojects.gharkharch.roomdb.dao.ExpenseDao
 import com.trycatchprojects.gharkharch.roomdb.dao.IncomeDao
+import com.trycatchprojects.gharkharch.roomdb.entities.ExpenseEntity
+import com.trycatchprojects.gharkharch.roomdb.entities.IncomeEntity
 import com.trycatchprojects.gharkharch.utils.Transaction
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -52,9 +54,29 @@ class HomeFragment : Fragment() {
             val expenses = expenseDao.getAllExpenses()
             val incomes = incomeDao.getAllIncomes()
 
-            // Calculate totals
-            val totalExpense = expenses.sumOf { it.amount }
-            val totalIncome = incomes.sumOf { it.amount }
+            // Get the current year
+            val currentYear = LocalDate.now().year
+
+            // Function to filter transactions by the current year
+            fun filterByYear(transactions: List<Any>, currentYear: Int): List<Any> {
+                return transactions.filter {
+                    val dateMillis = when (it) {
+                        is ExpenseEntity -> it.date
+                        is IncomeEntity -> it.date
+                        else -> 0L
+                    }
+                    val date = LocalDate.ofEpochDay(dateMillis / (24 * 60 * 60 * 1000)) // Convert millis to days
+                    date.year == currentYear
+                }
+            }
+
+            // Filter transactions for the current year
+            val filteredExpenses = filterByYear(expenses, currentYear) as List<ExpenseEntity>
+            val filteredIncomes = filterByYear(incomes, currentYear) as List<IncomeEntity>
+
+            // Calculate totals for the current year
+            val totalExpense = filteredExpenses.sumOf { it.amount }
+            val totalIncome = filteredIncomes.sumOf { it.amount }
             val totalBalance = totalIncome - totalExpense
 
             // Update UI with totals
@@ -63,12 +85,12 @@ class HomeFragment : Fragment() {
             binding.tvExpense.text = "₹ $totalExpense"
 
             val allTransactions = mutableListOf<Transaction>()
-            allTransactions.addAll(expenses.map {
+            allTransactions.addAll(filteredExpenses.map {
                 Transaction.Expense(
                     it.id, it.categoryId, it.name, it.amount, it.date
                 )
             })
-            allTransactions.addAll(incomes.map {
+            allTransactions.addAll(filteredIncomes.map {
                 Transaction.Income(
                     it.id, it.name, it.amount, it.date
                 )
@@ -87,6 +109,8 @@ class HomeFragment : Fragment() {
             binding.transactionRV.adapter = transactionAdapter
         }
     }
+
+
 
 
     private fun setUpTransactionRV() {

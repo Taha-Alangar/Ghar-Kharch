@@ -40,6 +40,7 @@ class CategoryExpenditureFragment : Fragment() {
         binding.CEImgBack.setOnClickListener {
             findNavController().navigate(R.id.action_categoryExpenditureFragment_to_homeFragment)
         }
+
         return binding.root
     }
 

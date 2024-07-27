@@ -19,28 +19,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/C.E.download"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="24dp"
-        android:src="@drawable/icon_download"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
-
     <TextView
         android:id="@+id/textView15"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_semibold"
         android:gravity="center"
+        android:layout_marginEnd="32dp"
         android:text="Category Expenditure"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/C_E_img_back"
-        app:layout_constraintEnd_toStartOf="@+id/C.E.download"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/C_E_img_back"
         app:layout_constraintTop_toTopOf="@+id/C_E_img_back" />
 

@@ -1,5 +1,6 @@
 package com.trycatchprojects.gharkharch.fragments
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -274,6 +275,15 @@ class AddFragment : Fragment() {
                 val arrayAdapter = ArrayAdapter(requireContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, categoryNames)
                 arrayAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
                 binding.spinnerName.adapter = arrayAdapter
+
+                binding.spinnerName.setOnLongClickListener {
+                    val selectedPosition = binding.spinnerName.selectedItemPosition
+                    if (selectedPosition != AdapterView.INVALID_POSITION) {
+                        val selectedCategoryName = categoryNames[selectedPosition]
+                        showDeleteCategoryDialog(selectedCategoryName)
+                    }
+                    true
+                }
             }
         }
 
@@ -285,4 +295,32 @@ class AddFragment : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
+    private fun showDeleteCategoryDialog(categoryName: String) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Delete Category")
+            .setMessage("Are you sure you want to delete the category '$categoryName'?")
+            .setPositiveButton("Yes") { dialog, _ ->
+                deleteCategory(categoryName)
+                dialog.dismiss()
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+    private fun deleteCategory(categoryName: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val categoryDao = AppDatabase.getDatabase(requireContext()).categoryDao()
+            val category = categoryDao.getAllCategories().find { it.name == categoryName }
+            if (category != null) {
+                categoryDao.deleteCategory(category)
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), "Category '$categoryName' deleted successfully", Toast.LENGTH_SHORT).show()
+                    setUpCategorySpinner() // Refresh the spinner after deletion
+                }
+            }
+        }
+    }
+
+
 }

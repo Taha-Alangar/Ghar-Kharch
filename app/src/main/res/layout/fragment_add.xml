@@ -13,8 +13,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="414dp"
@@ -40,7 +38,6 @@
                 app:layout_constraintStart_toStartOf="@+id/imageView2"
                 app:layout_constraintTop_toBottomOf="@+id/tvEIDescription">
 
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -59,14 +56,14 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+
                     <Spinner
                         android:id="@+id/spinnerName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="20dp"
                         android:background="@drawable/spinner_border_bg2"
-                        android:padding="8dp"
                         android:popupBackground="@color/transparent_gray"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -79,8 +76,8 @@
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="8dp"
                         android:hint="Income Type"
-                        android:visibility="gone"
                         android:textColorHint="@color/light_green"
+                        android:visibility="gone"
                         app:boxBackgroundMode="outline"
                         app:boxStrokeColor="@color/light_green"
                         app:boxStrokeErrorColor="@color/error_color"
@@ -110,11 +107,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="80dp"
                         android:fontFamily="@font/inter_medium"
                         android:text="Amount"
                         android:textColor="@color/dark_gray"
                         android:textSize="16sp"
-                        android:layout_marginTop="80dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -145,7 +142,7 @@
                             android:layout_height="match_parent"
                             android:backgroundTint="@color/light_green"
                             android:imeOptions="actionDone"
-                            android:inputType="text"
+                            android:inputType="numberDecimal"
                             android:padding="10dp"
                             android:textColor="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -191,11 +188,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:backgroundTint="@color/light_green"
+                            android:clickable="true"
+                            android:focusable="false"
                             android:imeOptions="actionDone"
                             android:inputType="text"
                             android:padding="10dp"
-                            android:focusable="false"
-                            android:clickable="true"
                             android:textColor="@color/light_green" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -263,20 +260,36 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvAddEI" />
 
-    <TextView
-        android:id="@+id/tvEIDescription"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:fontFamily="@font/inter_semibold"
-        android:gravity="center"
-        android:layout_marginTop="28dp"
-        android:text="You can add you daily expenditure "
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAddEI" />
+            <TextView
+                android:id="@+id/tvEIDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:fontFamily="@font/inter_semibold"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="You can add you daily expenditure "
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_marginTop="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:fontFamily="@font/inter_semibold"
+                android:gravity="center"
+                android:drawableEnd="@drawable/icon_up_arrow"
+                android:text="Toggle the above button to change "
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvAddEI" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

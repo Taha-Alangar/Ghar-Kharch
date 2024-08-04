@@ -1,10 +1,12 @@
 package com.trycatchprojects.gharkharch.screens
 
+import android.animation.ValueAnimator
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -31,6 +33,22 @@ class SplashActivity : AppCompatActivity() {
             }
             startActivity(Intent(this, nextActivity))
             finish()
-        }, 1000)
+        }, 1300)
+        val textView: TextView = findViewById(R.id.textView)
+        val text = "Ghar Kharch"
+        animateTextView(textView, text)
+    }
+    private fun animateTextView(textView: TextView, text: String) {
+        val handler = Handler(Looper.getMainLooper())
+        val delay = 100L // Delay between each letter appearance
+
+        ValueAnimator.ofInt(0, text.length).apply {
+            duration = (delay * text.length).toLong()
+            addUpdateListener { animation ->
+                val index = animation.animatedValue as Int
+                textView.text = text.substring(0, index)
+            }
+            start()
+        }
     }
 }

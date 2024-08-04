@@ -169,7 +169,7 @@ class AddFragment : Fragment() {
         val expenseAmount = binding.edtAmount.text.toString().toDoubleOrNull()
         val expenseDateStr = binding.edtDate.text.toString().trim()
 
-        if (expenseAmount != null && expenseDateStr.isNotEmpty()) {
+        if (expenseAmount != null && expenseDateStr.isNotEmpty()&& spinnerPosition != AdapterView.INVALID_POSITION ) {
             val expenseDate = SimpleDateFormat("d MMM yyyy", Locale.getDefault()).parse(expenseDateStr)?.time ?: System.currentTimeMillis()
 
             CoroutineScope(Dispatchers.IO).launch {
@@ -190,6 +190,9 @@ class AddFragment : Fragment() {
         } else {
             if (expenseAmount == null) binding.edtAmount.error = "Amount must be a number"
             if (expenseDateStr.isEmpty()) binding.edtDate.error = "Date cannot be empty"
+            if (spinnerPosition == AdapterView.INVALID_POSITION){
+                Toast.makeText(requireContext(), "Add Category First", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -232,6 +235,7 @@ class AddFragment : Fragment() {
                             binding.textView6.visibility=View.VISIBLE
                             binding.textView6.text="Amount"
                             binding.textInputLayout21.hint="Income Type"
+                            binding.tvEIDescription.text = "You can add your Income here"
                             binding.textInputLayout2.visibility=View.VISIBLE
                             binding.edtAmount.visibility=View.VISIBLE
                             binding.textView61.visibility=View.VISIBLE

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "226513751701",
+    "project_id": "ghar-kharch-826d0",
+    "storage_bucket": "ghar-kharch-826d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:226513751701:android:a923f953f9b102af88959c",
+        "android_client_info": {
+          "package_name": "com.trycatchprojects.gharkharch"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkX7dIrhgni-kvOhweL0v6v-A2OnP9qRg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
